@@ -35,7 +35,6 @@ def i_bplate(which):
     return -1
 
 
-
 def knapsackSolver(B: int, peso:list, valor:list):
     '''
     1) criar lista com W+1 e N+1 de tamanho
@@ -64,9 +63,21 @@ def knapsackSolver(B: int, peso:list, valor:list):
 
     return opt[-1][-1]
 
+instancia = i_bplate(1)
+
+W = instancia[0][1]
+
+values = []
+weights = []
+
+for i in range(1,len(instancia)):
+    values.append(instancia[i][0])
+    weights.append(instancia[i][1]) 
+
+# values = [60, 100, 120]
+# weights = [10, 20, 30]
+# W = 50
+#   RESULTADO ESPERADO: 300
 
 
-
-W = 50 #VER QUAIS PODERIAM SER POTENCIAIS PESOS DAS MOCHILAS !!!
-
-# print(knapsackSolver(W,weights,values))
+print(knapsackSolver(W,weights,values))
