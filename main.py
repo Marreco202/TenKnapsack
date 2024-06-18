@@ -36,16 +36,6 @@ def i_bplate(which):
 
 
 def knapsackSolver(B: int, peso:list, valor:list):
-    '''
-    1) criar lista com W+1 e N+1 de tamanho
-        talvez iniciar todo mundo com zero? nao tenho certeza
-
-    2) for nos itens:
-        for nos pesos:
-            caso nao caiba na mochila, pega o anterior
-            caso caiba:
-                verificar max entre ter ele na mochila, e nao ter ele na mochila
-    '''   
     QTD_MAX = 10 #quantidade maxima de vezes que posso pegar daquele item
 
     tam = len(valor) #quantidade de itens que eu tenho. Poderia ter pego o peso tambem para representar
@@ -61,19 +51,25 @@ def knapsackSolver(B: int, peso:list, valor:list):
                     if n * peso[i-1] <= j:
                         opt[i][j] = max(opt[i-1][j], (valor[i-1] * n) + opt[i-1][j- (n * peso[i-1])])
 
-    max_value = opt[tam][B]
     w = B
     items_count = [0] * tam
 
-    # Rastreamento para descobrir quais itens foram incluídos
-    for i in range(tam, 0, -1):
-        for k in range(QTD_MAX, 0, -1):
-            if k * weights[i-1] <= w and opt[i][w] == opt[i-1][w - k * weights[i-1]] + k * values[i-1]:
-                items_count[i-1] += k
-                w -= k * weights[i-1]
-                break
-    print("Itens selecionados (índices):", items_count)
 
+    #Quais itens foram incluídos
+    for i in range(tam, 0, -1):
+        for n in range(QTD_MAX, 0, -1):
+            if n * peso[i-1] <= w and opt[i][w] == opt[i-1][w - n * peso[i-1]] + (n * valor[i-1]):
+                items_count[i-1] += n
+                w -= n * peso[i-1]
+                break
+
+    # print("Itens selecionados:", items_count)
+
+    print("QTDx item (v,w)")
+    for i in range(0,len(items_count)):
+        if items_count[i] != 0:
+            print("{}x item ({},{})".format(items_count[i],valor[i],peso[i])) #valor,peso
+ 
     return opt[-1][-1]
 
 instancia = i_bplate(1)
@@ -86,11 +82,5 @@ weights = []
 for i in range(1,len(instancia)):
     values.append(instancia[i][0])
     weights.append(instancia[i][1]) 
-
-values = [60, 100, 120]
-weights = [10, 20, 30]
-W = 50
-#RESULTADO ESPERADO: 300
-
-
+    
 print(knapsackSolver(W,weights,values))
