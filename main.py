@@ -80,16 +80,18 @@ def knapsackSolver(B: int, peso:list, valor:list):
 
     return opt[-1][-1]
 
-instancia = i_bplate(1)
+# instancia = i_bplate(1)
 
-W = instancia[0][1]
 
 values = []
 weights = []
 
 for j in range(1,9):
-    print(" === INSTANCIA {} === ".format(j))
+
     instancia = i_bplate(j)
+    W = instancia[0][1]
+    
+    print(" === INSTANCIA {} === ".format(j))
 
     for i in range(1,len(instancia)):
         values.append(instancia[i][0])
